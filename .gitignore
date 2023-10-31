@@ -1,0 +1,4 @@
+node_modules
+config/credentials.json
+dist
+eng.traineddata

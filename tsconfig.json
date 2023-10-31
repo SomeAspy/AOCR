@@ -1,0 +1,48 @@
+{
+    "compilerOptions": {
+        "allowUnreachableCode": false,
+        "allowUnusedLabels": false,
+        "alwaysStrict": true,
+        "exactOptionalPropertyTypes": true,
+        "noImplicitAny": true,
+        "noImplicitOverride": true,
+        "noImplicitReturns": true,
+        "noImplicitThis": true,
+        "noPropertyAccessFromIndexSignature": true,
+        "noUncheckedIndexedAccess": true,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "strict": true,
+        "strictBindCallApply": true,
+        "strictFunctionTypes": true,
+        "strictNullChecks": true,
+        "strictPropertyInitialization": true,
+        "useUnknownInCatchVariables": true,
+        "outDir": "dist",
+        "target": "ESNext",
+        "module": "NodeNext",
+        "moduleResolution": "NodeNext",
+        "types": [
+            "node"
+        ],
+        "esModuleInterop": true,
+        "removeComments": true,
+        "resolveJsonModule": true,
+        "plugins": [
+            {
+                "name": "typescript-eslint-language-service"
+            }
+        ],
+        "lib": [
+            "ESNext",
+        ],
+    },
+    "include": [
+        "src/**/*.ts",
+        "config/*.json",
+    ],
+    "exclude": [
+        "node_modules",
+        "dist",
+    ]
+}

@@ -1,0 +1,27 @@
+{
+	"name": "aocr",
+	"type": "module",
+	"main": "dist/index.js",
+	"scripts": {
+		"dev": "tsx src/index.ts",
+		"start": "node dist/src/index.js",
+		"build": "tsc",
+		"lint": "eslint -c .eslintrc.json src config/*"
+	},
+	"dependencies": {
+		"discord.js": "^14.13.0",
+		"tesseract.js": "^5.0.3"
+	},
+	"optionalDependencies": {
+		"tsx": "^3.14.0"
+	},
+	"devDependencies": {
+		"@types/node": "^20.8.9",
+		"@typescript-eslint/eslint-plugin": "^6.9.1",
+		"@typescript-eslint/parser": "^6.9.1",
+		"eslint": "^8.52.0",
+		"eslint-plugin-json": "^3.1.0",
+		"typescript": "^5.2.2",
+		"typescript-eslint-language-service": "^5.0.5"
+	}
+}
