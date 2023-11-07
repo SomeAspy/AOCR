@@ -59,15 +59,15 @@ export async function runActions(
             dmMessage += ` Reason: ${blockRule.metadata.customMessage}`;
         }
         try {
-            if (message.deletable) {
-                await message.author.send({
-                    content: dmMessage,
-                    embeds: [embed],
-                });
-                await message.delete();
-            }
+            await message.author.send({
+                content: dmMessage,
+                embeds: [embed],
+            });
         } catch (e) {
             //do nothing.
+        }
+        if (message.deletable) {
+            await message.delete();
         }
     }
 }
