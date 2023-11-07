@@ -1,5 +1,5 @@
 import { Message, PermissionsBitField } from 'discord.js';
-import { ocr } from '../libs/tesseract.js';
+import { processImage } from '../functions/processImage.js';
 
 export async function handleMessage(message: Message) {
     if (
@@ -12,23 +12,20 @@ export async function handleMessage(message: Message) {
     ) {
         return;
     }
-    const autoModRules = await message.guild.autoModerationRules.fetch();
-    // autoModRules.forEach((rule) => {
-    //     console.log(rule.toJSON());
-    // });
-    const imagesToCheck = [];
+    const imagesToCheck: string[] = [];
     if (message.embeds) {
-        for await (const embed of message.embeds) {
-            const ocrData = await ocr.recognize(embed.url!);
-            console.log(
-                `${ocrData.data.text}: ${ocrData.data.confidence}% confident`,
-            );
+        for (const embed of message.embeds) {
+            if (embed.url) {
+                imagesToCheck.push(embed.url);
+            }
         }
     }
     if (message.attachments) {
-        for (let i = 0; i < message.attachments.size; ++i) {
-            const ocrData = await ocr.recognize(message.attachments.at(i)!.url);
-            console.log(ocrData.data.text);
-        }
+        message.attachments.forEach((attachment) => {
+            imagesToCheck.push(attachment.url);
+        });
+    }
+    for await (const image of imagesToCheck) {
+        await processImage(image, message);
     }
 }
