@@ -1,15 +1,27 @@
 import { AutoModerationRuleTriggerType, Message } from 'discord.js';
 import { ocr } from '../libs/tesseract.js';
 import Tesseract from 'tesseract.js';
+import { runActions } from './runActions.js';
 
 export async function processImage(imageUrl: string, message: Message) {
     // including message as a param is guh, but whatever.
-    const autoModRules = await message.guild!.autoModerationRules.fetch(); // should double check this exists
+    if (!message.guild) {
+        return;
+    }
+    const autoModRules = await message.guild.autoModerationRules.fetch();
     const ocrResult: Tesseract.RecognizeResult = await ocr.recognize(imageUrl);
     const ocrText = ocrResult.data.text;
-    console.log(ocrText);
     for (let ruleNumber = 0; ruleNumber < autoModRules.size; ++ruleNumber) {
         const rule = autoModRules.at(ruleNumber)!;
+
+        if (
+            message.member!.roles.cache.some((role) =>
+                rule.exemptRoles.has(role.id),
+            ) ||
+            rule.exemptChannels.has(message.channelId)
+        ) {
+            return;
+        }
 
         let filteredOcr = ocrText;
         rule.triggerMetadata.allowList.forEach((word) => {
@@ -23,7 +35,6 @@ export async function processImage(imageUrl: string, message: Message) {
         ) {
             continue;
         }
-        console.log(rule.toJSON());
 
         if (rule.triggerMetadata.keywordFilter) {
             for (
@@ -34,9 +45,11 @@ export async function processImage(imageUrl: string, message: Message) {
                 const keyword =
                     rule.triggerMetadata.keywordFilter[keywordNumber]!;
                 if (filteredOcr.includes(keyword)) {
-                    //TODO: RUN AUTOMOD ACTIONS
-                    await message.reply('nuh uh (keyword)');
-                    return;
+                    try {
+                        await runActions(rule.actions, message, ocrResult);
+                    } catch (e) {
+                        console.error(e);
+                    }
                 }
             }
         }
@@ -51,8 +64,11 @@ export async function processImage(imageUrl: string, message: Message) {
                     rule.triggerMetadata.regexPatterns[regexNumber]!,
                 );
                 if (ruleRegex.test(filteredOcr)) {
-                    //TODO: RUN AUTOMOD ACTIONS
-                    await message.reply('nuh uh (regex)');
+                    try {
+                        await runActions(rule.actions, message, ocrResult);
+                    } catch (e) {
+                        console.error(e);
+                    }
                     return;
                 }
             }

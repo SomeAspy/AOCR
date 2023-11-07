@@ -4,11 +4,11 @@ import { processImage } from '../functions/processImage.js';
 export async function handleMessage(message: Message) {
     if (
         message.author.bot ||
-        !message.inGuild() // ||
-        //message.member?.permissions.has(
-        //    PermissionsBitField.Flags.ManageGuild,
-        //    true,
-        //)
+        !message.inGuild() ||
+        message.member?.permissions.has(
+            PermissionsBitField.Flags.ManageGuild,
+            true,
+        )
     ) {
         return;
     }
