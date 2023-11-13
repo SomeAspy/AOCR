@@ -35,6 +35,7 @@
         ],
         "lib": [
             "ESNext",
+            "DOM",
         ],
     },
     "include": [
