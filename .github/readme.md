@@ -8,9 +8,13 @@ Take note of the strict license that requires this not be used for commercial pu
 
 <https://discord.com/api/oauth2/authorize?client_id=1168700227201548409&permissions=1099511639072&scope=bot>
 
+> [!IMPORTANT]
+> The production bot does not apply automod rules to admins/users with manage server, similar to standard automod
+
 ## To Host Yourself
 
 1. Create a discord bot with the following permissions ([Detailed guide from Discord.JS](https://discordjs.guide/preparations/setting-up-a-bot-application.html)):
+    - ***ENABLE THE MESSAGE CONTENT INTENT***
     - Send Messages (To send messages to the automod channel)
     - Manage Messages (To delete offending messages)
     - Manage Server (To view AutoMod rules)
