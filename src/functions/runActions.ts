@@ -4,8 +4,12 @@ import {
     EmbedBuilder,
     Message,
     TextBasedChannel,
-} from 'discord.js';
-import Tesseract from 'tesseract.js';
+} from "discord.js";
+import Tesseract from "tesseract.js";
+
+import untypedConfig from "../../config/config.json" assert { type: "json" };
+import type { Config } from "../types/Config.js";
+const config = untypedConfig as Config;
 
 export async function runActions(
     automodRules: AutoModerationAction[],
@@ -25,10 +29,10 @@ export async function runActions(
     //we are doing it this way to keep a constant order of operations
 
     if (timeoutRule) {
-        if (message.member?.moderatable) {
+        if (message.member?.moderatable && !config.OnlyDelete) {
             await message.member.timeout(
                 timeoutRule.metadata.durationSeconds! * 1000,
-                'Automod OCR: Rule broken',
+                "Automod OCR: Rule broken",
             );
         }
     }
@@ -39,9 +43,9 @@ export async function runActions(
             iconURL: message.author.displayAvatarURL(),
         })
         .setTimestamp(Date.now())
-        .addFields({ name: 'OCR recognized:', value: ocrData.data.text })
+        .addFields({ name: "OCR recognized:", value: ocrData.data.text })
         .addFields({
-            name: 'OCR Confidence:',
+            name: "OCR Confidence:",
             value: `${ocrData.data.confidence}%`,
         });
 
@@ -54,7 +58,7 @@ export async function runActions(
     }
 
     if (blockRule) {
-        let dmMessage = 'Your image has been blocked!';
+        let dmMessage = "Your image has been blocked!";
         if (blockRule.metadata.customMessage) {
             dmMessage += ` Reason: ${blockRule.metadata.customMessage}`;
         }

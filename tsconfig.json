@@ -28,11 +28,6 @@
         "esModuleInterop": true,
         "removeComments": true,
         "resolveJsonModule": true,
-        "plugins": [
-            {
-                "name": "typescript-eslint-language-service"
-            }
-        ],
         "lib": [
             "ESNext",
             "DOM",

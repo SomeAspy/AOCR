@@ -1,7 +1,7 @@
-import { AutoModerationRuleTriggerType, Message } from 'discord.js';
-import { ocr } from '../libs/tesseract.js';
-import Tesseract from 'tesseract.js';
-import { runActions } from './runActions.js';
+import { AutoModerationRuleTriggerType, Message } from "discord.js";
+import { ocr } from "../libs/tesseract.js";
+import Tesseract from "tesseract.js";
+import { runActions } from "./runActions.js";
 
 export async function processImage(imageUrl: string, message: Message) {
     // including message as a param is guh, but whatever.
@@ -9,7 +9,10 @@ export async function processImage(imageUrl: string, message: Message) {
         return;
     }
     const autoModRules = await message.guild.autoModerationRules.fetch();
-    const ocrResult: Tesseract.RecognizeResult = await ocr.recognize(imageUrl);
+    const ocrResult: Tesseract.RecognizeResult = await ocr.addJob(
+        "recognize",
+        imageUrl,
+    );
     const ocrText = ocrResult.data.text;
     for (let ruleNumber = 0; ruleNumber < autoModRules.size; ++ruleNumber) {
         const rule = autoModRules.at(ruleNumber)!;
@@ -24,8 +27,9 @@ export async function processImage(imageUrl: string, message: Message) {
         }
 
         let filteredOcr = ocrText;
+        filteredOcr = filteredOcr.replaceAll("\n", ""); //Tesseract inserts newline characters
         rule.triggerMetadata.allowList.forEach((word) => {
-            filteredOcr = filteredOcr.replaceAll(word, '');
+            filteredOcr = filteredOcr.replaceAll(word, "");
         });
 
         if (

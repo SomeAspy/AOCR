@@ -1,9 +1,32 @@
-# AOCR
-
- <p xmlns:cc="http://creativecommons.org/ns#" xmlns:dct="http://purl.org/dc/terms/"><a property="dct:title" rel="cc:attributionURL" href="https://github.com/someaspy/aocr">AOCR</a> by <a rel="cc:attributionURL dct:creator" property="cc:attributionName" href="https://aspy.dev">Aiden</a> is licensed under <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">CC BY-NC-SA 4.0<img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/nc.svg?ref=chooser-v1"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/sa.svg?ref=chooser-v1"></a></p>
+# AOCR [![License: CC BY-NC-SA 4.0](https://licensebuttons.net/l/by-nc-sa/4.0/80x15.png)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
 
 ## OCR that automatically integrates with Discord's AutoMod rules (AutoMod Optical Character Recognition)
 
 Take note of the strict license that requires this not be used for commercial purposes. If you want to do so, you can contact me at my email for express consent. (In GitHub profile)
 
-Powered by [Tesseract.js](https://tesseract.projectnaptha.com/)
+## Invite
+
+<https://discord.com/api/oauth2/authorize?client_id=1168700227201548409&permissions=1099511639072&scope=bot>
+
+## To Host Yourself
+
+1. Create a discord bot with the following permissions ([Detailed guide from Discord.JS](https://discordjs.guide/preparations/setting-up-a-bot-application.html)):
+    - Send Messages (To send messages to the automod channel)
+    - Manage Messages (To delete offending messages)
+    - Manage Server (To view AutoMod rules)
+    - Read Messages/View Channels (To view messages and images contained within)
+    - Moderate Members (To apply moderation actions to members)
+2. Add the bot to your server
+3. Clone this repository (`git clone https://github.com/SomeAspy/AOCR`)
+4. Set configs in `config/config.json` (copy `config.example.json` and rename the copy to `config.json`)
+    - `DiscordToken`: This will be your bots Discord Token.
+    - `Workers`: The amount of workers the bot will have for OCR (Default: `5`)
+    - `ApplyToModerators`: Whether to apply AOCR detection to admins and members with manage server. (Default: `false`)
+    - `OnlyDelete`: This will only delete messages instead of applying all automod rules. (Default: `false`)
+5. Install packages using a node package manager (I suggest [PNPM](https://pnpm.io/)): `pnpm i`
+6. Build: `pnpm build`
+7. Run: `pnpm start`
+
+### Powered by [Tesseract.js](https://tesseract.projectnaptha.com/)
+
+#### Training data provided by <https://github.com/tesseract-ocr/tessdata_best/blob/main/eng.traineddata>

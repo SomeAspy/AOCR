@@ -1,14 +1,19 @@
-import { Message, PermissionsBitField } from 'discord.js';
-import { processImage } from '../functions/processImage.js';
+import { Message, PermissionsBitField } from "discord.js";
+import { processImage } from "../functions/processImage.js";
+
+import untypedConfig from "../../config/config.json" assert { type: "json" };
+import type { Config } from "../types/Config.js";
+const config = untypedConfig as Config;
 
 export async function handleMessage(message: Message) {
     if (
         message.author.bot ||
         !message.inGuild() ||
-        message.member?.permissions.has(
-            PermissionsBitField.Flags.ManageGuild,
-            true,
-        )
+        (!config.ApplyToModerators &&
+            message.member?.permissions.has(
+                PermissionsBitField.Flags.ManageGuild,
+                true,
+            ))
     ) {
         return;
     }

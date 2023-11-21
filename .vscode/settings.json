@@ -3,6 +3,7 @@
         "AOCR",
         "AUTOMOD",
         "moderatable",
-        "tesseract"
+        "tesseract",
+        "traineddata"
     ]
 }

@@ -1,7 +1,7 @@
-import { Client, GatewayIntentBits, Events, Message } from 'discord.js';
-import untypedCredentials from '../config/credentials.json' assert { type: 'json' };
-import type { Credentials } from './types/Credentials.js';
-const credentials = untypedCredentials as Credentials;
+import { Client, GatewayIntentBits, Events, Message } from "discord.js";
+import untypedConfig from "../config/config.json" assert { type: "json" };
+import type { Config } from "./types/Config.js";
+const config = untypedConfig as Config;
 
 const client = new Client({
     intents: [
@@ -13,11 +13,10 @@ const client = new Client({
 });
 
 client.once(Events.ClientReady, () => {
-    console.log('Connected to Discord!');
+    console.log("Connected to Discord!");
 });
 
-import { handleMessage } from './handlers/message.js';
-import { ocr } from './libs/tesseract.js';
+import { handleMessage } from "./handlers/message.js";
 client.on(Events.MessageCreate, async (message) => {
     if (message.attachments.at(0) || message.embeds.at(0)) {
         try {
@@ -40,11 +39,13 @@ client.on(Events.MessageUpdate, async (message) => {
 
 client.on(Events.Error, (error) => console.error(error));
 client.on(Events.Warn, (warning) => console.warn(warning));
+
+import { ocr } from "./libs/tesseract.js";
 client.on(Events.Invalidated, async () => {
-    console.log('Session Invalidated - Stopping Client');
+    console.log("Session Invalidated - Stopping Client");
     await ocr.terminate();
     await client.destroy();
     process.exit(1);
 });
 
-await client.login(credentials.DiscordToken);
+await client.login(config.DiscordToken);
