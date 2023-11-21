@@ -50,7 +50,12 @@ export async function processImage(imageUrl: string, message: Message) {
                     rule.triggerMetadata.keywordFilter[keywordNumber]!;
                 if (filteredOcr.includes(keyword)) {
                     try {
-                        await runActions(rule.actions, message, ocrResult);
+                        await runActions(
+                            rule.actions,
+                            message,
+                            ocrResult,
+                            imageUrl,
+                        );
                     } catch (e) {
                         console.error(e);
                     }
@@ -69,7 +74,12 @@ export async function processImage(imageUrl: string, message: Message) {
                 );
                 if (ruleRegex.test(filteredOcr)) {
                     try {
-                        await runActions(rule.actions, message, ocrResult);
+                        await runActions(
+                            rule.actions,
+                            message,
+                            ocrResult,
+                            imageUrl,
+                        );
                     } catch (e) {
                         console.error(e);
                     }

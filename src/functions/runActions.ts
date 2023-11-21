@@ -15,6 +15,7 @@ export async function runActions(
     automodRules: AutoModerationAction[],
     message: Message,
     ocrData: Tesseract.RecognizeResult,
+    imageUrl: string,
 ) {
     const blockRule = automodRules.find(
         (rule) => rule.type == AutoModerationActionType.BlockMessage,
@@ -47,7 +48,8 @@ export async function runActions(
         .addFields({
             name: "OCR Confidence:",
             value: `${ocrData.data.confidence}%`,
-        });
+        })
+        .setImage(imageUrl);
 
     if (alertRule) {
         const channel = message.client.channels.cache.get(
