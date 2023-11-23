@@ -46,10 +46,22 @@ client.on(Events.MessageUpdate, async (message) => {
     }
 });
 
+client.on(Events.MessageReactionAdd, async (reaction) => {
+    if (reaction.count != 1) {
+        return;
+    }
+    try {
+        await handleReaction(reaction);
+    } catch (error) {
+        console.error(error);
+    }
+});
+
 client.on(Events.Error, (error) => console.error(error));
 client.on(Events.Warn, (warning) => console.warn(warning));
 
 import { ocr } from "./libs/tesseract.js";
+import { handleReaction } from "./handlers/reaction.js";
 client.on(Events.Invalidated, async () => {
     console.log("Session Invalidated - Stopping Client");
     await ocr.terminate();
