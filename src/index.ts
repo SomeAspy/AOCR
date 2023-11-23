@@ -18,7 +18,12 @@ client.once(Events.ClientReady, () => {
 
 import { handleMessage } from "./handlers/message.js";
 client.on(Events.MessageCreate, async (message) => {
-    if (message.attachments.at(0) || message.embeds.at(0)) {
+    if (
+        message.attachments.at(0) ||
+        message.embeds.at(0) ||
+        (message.stickers.at(0) && config.CheckStickers) ||
+        config.CheckEmojis
+    ) {
         try {
             await handleMessage(message);
         } catch (error) {
@@ -28,7 +33,11 @@ client.on(Events.MessageCreate, async (message) => {
 });
 
 client.on(Events.MessageUpdate, async (message) => {
-    if (message.attachments.at(0) || message.embeds.at(0)) {
+    if (
+        message.attachments.at(0) ||
+        message.embeds.at(0) ||
+        message.stickers.size != 0
+    ) {
         try {
             await handleMessage(message as Message);
         } catch (error) {

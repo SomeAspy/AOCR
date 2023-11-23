@@ -27,6 +27,9 @@ Take note of the strict license that requires this not be used for commercial pu
     - `Workers`: The amount of workers the bot will have for OCR (Default: `5`)
     - `ApplyToModerators`: Whether to apply AOCR detection to admins and members with manage server. (Default: `false`)
     - `OnlyDelete`: This will only delete messages instead of applying all automod rules. (Default: `false`)
+    - `CheckEmojis`: Check emojis with OCR. This requires processing **EVERY** message with regex. (Default: `false`)
+    - `CheckReactions`: Check reactions with OCR. (Default: `true`)
+    - `CheckStickers`: Check stickers with OCR. (Default: `true`)
 5. Install packages using a node package manager (I suggest [PNPM](https://pnpm.io/)): `pnpm i`
 6. Build: `pnpm build`
 7. Run: `pnpm start`

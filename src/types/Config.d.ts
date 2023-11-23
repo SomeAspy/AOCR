@@ -3,4 +3,7 @@ export interface Config {
     Workers: number;
     ApplyToModerators: boolean;
     OnlyDelete: boolean;
+    CheckEmojis: boolean;
+    CheckReactions: boolean;
+    CheckStickers: boolean;
 }

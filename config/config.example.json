@@ -2,5 +2,8 @@
     "DiscordToken": "Token for a discord bot",
     "Workers": 5,
     "ApplyToModerators": false,
-    "OnlyDelete": false
+    "OnlyDelete": false,
+    "CheckEmojis": true,
+    "CheckReactions": false,
+    "CheckStickers": true
 }

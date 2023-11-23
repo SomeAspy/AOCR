@@ -30,6 +30,27 @@ export async function handleMessage(message: Message) {
             imagesToCheck.push(attachment.url);
         });
     }
+    if (config.CheckStickers && message.stickers) {
+        message.stickers.forEach((sticker) => {
+            imagesToCheck.push(sticker.url);
+        });
+    }
+    if (config.CheckEmojis && message.content) {
+        /<:.+?:[0-9]+?>/g.exec(message.content)?.forEach((emojiDeclaration) => {
+            const emojiId = /:[0-9].+[0-9]>/
+                .exec(emojiDeclaration)
+                ?.at(0)
+                ?.slice(1)
+                .slice(0, -1)
+                .toString();
+            if (emojiId) {
+                imagesToCheck.push(
+                    `https://cdn.discordapp.com/emojis/${emojiId}.webp?size=max&quality=lossless`,
+                );
+            }
+        });
+    }
+
     for await (const image of imagesToCheck) {
         await processImage(image, message);
     }
