@@ -35,14 +35,14 @@ export async function process(
 
         rule.triggerMetadata.keywordFilter.forEach((keyword) => {
             if (cleanedText.includes(keyword)) {
-                runActions(member, rule.actions, event, ocrData, imageUrl);
+                void runActions(member, rule.actions, event, ocrData, imageUrl);
                 return;
             }
         });
 
         rule.triggerMetadata.regexPatterns.forEach((pattern) => {
             if (RegExp(pattern).test(cleanedText)) {
-                runActions(member, rule.actions, event, ocrData, imageUrl);
+                void runActions(member, rule.actions, event, ocrData, imageUrl);
                 return;
             }
         });
