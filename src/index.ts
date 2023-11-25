@@ -1,4 +1,10 @@
-import { Client, GatewayIntentBits, Events, Message } from "discord.js";
+import {
+    Client,
+    GatewayIntentBits,
+    Events,
+    type Message,
+    Partials,
+} from "discord.js";
 import untypedConfig from "../config/config.json" assert { type: "json" };
 import type { Config } from "./types/Config.js";
 const config = untypedConfig as Config;
@@ -9,7 +15,9 @@ const client = new Client({
         GatewayIntentBits.AutoModerationConfiguration,
         GatewayIntentBits.MessageContent,
         GatewayIntentBits.GuildMessages,
+        GatewayIntentBits.GuildMessageReactions,
     ],
+    partials: [Partials.Reaction, Partials.Message], // We need these partials to
 });
 
 client.once(Events.ClientReady, () => {

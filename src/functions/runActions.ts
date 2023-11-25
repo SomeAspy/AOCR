@@ -1,79 +1,95 @@
 import {
-    AutoModerationAction,
     AutoModerationActionType,
-    EmbedBuilder,
+    type AutoModerationAction,
     Message,
-    TextBasedChannel,
+    type GuildMember,
+    type MessageReaction,
+    type TextBasedChannel,
+    EmbedBuilder,
 } from "discord.js";
-import Tesseract from "tesseract.js";
+import type Tesseract from "tesseract.js";
 
 import untypedConfig from "../../config/config.json" assert { type: "json" };
 import type { Config } from "../types/Config.js";
 const config = untypedConfig as Config;
 
 export async function runActions(
-    automodRules: AutoModerationAction[],
-    message: Message,
+    member: GuildMember,
+    automodActions: AutoModerationAction[],
+    event: Message | MessageReaction,
     ocrData: Tesseract.RecognizeResult,
     imageUrl: string,
 ) {
-    const blockRule = automodRules.find(
+    const blockRule = automodActions.find(
         (rule) => rule.type == AutoModerationActionType.BlockMessage,
     );
-    const alertRule = automodRules.find(
+    const alertRule = automodActions.find(
         (rule) => rule.type == AutoModerationActionType.SendAlertMessage,
     );
-    const timeoutRule = automodRules.find(
+    const timeoutRule = automodActions.find(
         (rule) => rule.type == AutoModerationActionType.Timeout,
     );
 
-    //we are doing it this way to keep a constant order of operations
-
-    if (timeoutRule) {
-        if (message.member?.moderatable && !config.OnlyDelete) {
-            await message.member.timeout(
-                timeoutRule.metadata.durationSeconds! * 1000,
-                "Automod OCR: Rule broken",
-            );
-        }
-    }
-
     const embed = new EmbedBuilder()
         .setAuthor({
-            name: message.author.username,
-            iconURL: message.author.displayAvatarURL(),
+            name: member.user.username,
+            iconURL: member.user.displayAvatarURL(),
         })
-        .setTimestamp(Date.now())
-        .addFields({ name: "OCR recognized:", value: ocrData.data.text })
+        .addFields({ name: "AOCR Recognized:", value: ocrData.data.text })
         .addFields({
-            name: "OCR Confidence:",
+            name: "Result Confidence:",
             value: `${ocrData.data.confidence}%`,
         })
         .setImage(imageUrl);
 
-    if (alertRule) {
-        const channel = message.client.channels.cache.get(
-            alertRule.metadata.channelId!,
-        )!;
+    if (timeoutRule) {
+        if (member.moderatable && !config.OnlyDelete) {
+            try {
+                await member.timeout(
+                    timeoutRule.metadata.durationSeconds! * 1000,
+                    timeoutRule.metadata.customMessage
+                        ? timeoutRule.metadata.customMessage
+                        : "AOCR: Rule Broken",
+                );
+            } catch {
+                // Do nothing.
+            }
+        }
+    }
 
-        await (channel as TextBasedChannel).send({ embeds: [embed] });
+    if (alertRule) {
+        try {
+            await (
+                event.client.channels.cache.get(
+                    alertRule.metadata.channelId!,
+                ) as TextBasedChannel
+            ).send({ embeds: [embed] });
+        } catch {
+            // Do nothing.
+        }
     }
 
     if (blockRule) {
-        let dmMessage = "Your image has been blocked!";
-        if (blockRule.metadata.customMessage) {
-            dmMessage += ` Reason: ${blockRule.metadata.customMessage}`;
-        }
         try {
-            await message.author.send({
-                content: dmMessage,
+            await member.send({
+                content: blockRule.metadata.customMessage
+                    ? blockRule.metadata.customMessage
+                    : "AOCR: Rule Broken",
                 embeds: [embed],
             });
-        } catch (e) {
-            //do nothing.
+        } catch {
+            // Do nothing.
         }
-        if (message.deletable) {
-            await message.delete();
+        try {
+            if (event instanceof Message) {
+                if (event.deletable) {
+                    await event.delete();
+                }
+            } else {
+                await event.remove();
+            }
+        } catch {
+            // Do nothing.
         }
     }
 }

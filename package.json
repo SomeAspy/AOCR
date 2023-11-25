@@ -11,10 +11,10 @@
 		"tesseract.js": "^5.0.3"
 	},
 	"optionalDependencies": {
-		"tsx": "^4.3.0"
+		"tsx": "^4.5.0"
 	},
 	"devDependencies": {
-		"@types/node": "^20.9.4",
+		"@types/node": "^20.10.0",
 		"@typescript-eslint/eslint-plugin": "^6.12.0",
 		"@typescript-eslint/parser": "^6.12.0",
 		"eslint": "^8.54.0",
