@@ -1,9 +1,5 @@
 # AOCR [![License: CC BY-NC-SA 4.0](https://licensebuttons.net/l/by-nc-sa/4.0/80x15.png)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
 
-## OCR that automatically integrates with Discord's AutoMod rules (AutoMod Optical Character Recognition)
-
-Take note of the strict license that requires this not be used for commercial purposes. If you want to do so, you can contact me at my email for express consent. (In GitHub profile)
-
 ## Invite
 
 <https://discord.com/api/oauth2/authorize?client_id=1168700227201548409&permissions=1099511639072&scope=bot>

@@ -1,4 +1,10 @@
-import { Client, GatewayIntentBits, Events, Message } from "discord.js";
+import {
+    Client,
+    GatewayIntentBits,
+    Events,
+    type Message,
+    Partials,
+} from "discord.js";
 import untypedConfig from "../config/config.json" assert { type: "json" };
 import type { Config } from "./types/Config.js";
 const config = untypedConfig as Config;
@@ -9,7 +15,9 @@ const client = new Client({
         GatewayIntentBits.AutoModerationConfiguration,
         GatewayIntentBits.MessageContent,
         GatewayIntentBits.GuildMessages,
+        GatewayIntentBits.GuildMessageReactions,
     ],
+    partials: [Partials.Reaction, Partials.Message], // We need these partials to
 });
 
 client.once(Events.ClientReady, () => {
@@ -46,10 +54,22 @@ client.on(Events.MessageUpdate, async (message) => {
     }
 });
 
+client.on(Events.MessageReactionAdd, async (reaction) => {
+    if (reaction.count != 1) {
+        return;
+    }
+    try {
+        await handleReaction(reaction);
+    } catch (error) {
+        console.error(error);
+    }
+});
+
 client.on(Events.Error, (error) => console.error(error));
 client.on(Events.Warn, (warning) => console.warn(warning));
 
 import { ocr } from "./libs/tesseract.js";
+import { handleReaction } from "./handlers/reaction.js";
 client.on(Events.Invalidated, async () => {
     console.log("Session Invalidated - Stopping Client");
     await ocr.terminate();

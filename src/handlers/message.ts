@@ -1,5 +1,5 @@
 import { Message, PermissionsBitField } from "discord.js";
-import { processImage } from "../functions/processImage.js";
+import { process } from "../functions/process.js";
 
 import untypedConfig from "../../config/config.json" assert { type: "json" };
 import type { Config } from "../types/Config.js";
@@ -51,7 +51,7 @@ export async function handleMessage(message: Message) {
         });
     }
 
-    for await (const image of imagesToCheck) {
-        await processImage(image, message);
+    for (const image of imagesToCheck) {
+        await process(message.member!, message, image);
     }
 }
