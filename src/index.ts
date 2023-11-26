@@ -55,6 +55,9 @@ client.on(Events.MessageUpdate, async (message) => {
 });
 
 client.on(Events.MessageReactionAdd, async (reaction) => {
+    if (reaction.partial) {
+        reaction = await reaction.fetch();
+    }
     if (reaction.count != 1) {
         return;
     }
