@@ -1,6 +1,8 @@
 # AOCR [![License: CC BY-NC-SA 4.0](https://licensebuttons.net/l/by-nc-sa/4.0/80x15.png)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
 > Enhance Discord's automod with image recognition - Works on emojis, reactions, stickers, and more! 
 
+https://github.com/SomeAspy/AOCR/assets/33640860/4d8be2f5-ce98-4b92-bfe6-88424ab23c99
+
 ## Invite
 
 <https://discord.com/api/oauth2/authorize?client_id=1168700227201548409&permissions=1099511639072&scope=bot>
