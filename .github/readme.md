@@ -1,11 +1,13 @@
 # AOCR [![License: CC BY-NC-SA 4.0](https://licensebuttons.net/l/by-nc-sa/4.0/80x15.png)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
-> Enhance Discord's automod with image recognition - Works on emojis, reactions, stickers, and more! 
 
-https://github.com/SomeAspy/AOCR/assets/33640860/4d8be2f5-ce98-4b92-bfe6-88424ab23c99
+> Enhance Discord's automod with image recognition - Works on emojis, reactions, stickers, and more!
+
+![Video Demo](https://github.com/SomeAspy/AOCR/assets/33640860/4d8be2f5-ce98-4b92-bfe6-88424ab23c99)
 
 ## Invite
 
-<https://discord.com/api/oauth2/authorize?client_id=1168700227201548409&permissions=1099511639072&scope=bot>
+<https://discord.com/api/oauth2/authorize?client_id=1168700227201548409&permissions=1099511639072&scope=bot+applications.commands>
+(Remove the `+applications.commands` part to disable the help command in server)
 
 > [!IMPORTANT]
 > The production bot does not apply automod rules to admins/users with manage server, similar to standard automod
@@ -19,11 +21,13 @@ https://github.com/SomeAspy/AOCR/assets/33640860/4d8be2f5-ce98-4b92-bfe6-88424ab
     - Manage Server (To view AutoMod rules)
     - Read Messages/View Channels (To view messages and images contained within)
     - Moderate Members (To apply moderation actions to members)
+    - Applications.Commands (Optional, adds a help command)
 2. Add the bot to your server
 3. Clone this repository (`git clone https://github.com/SomeAspy/AOCR`)
 4. Set configs in `config/config.json` (copy `config.example.json` and rename the copy to `config.json`)
     - `DiscordToken`: This will be your bots Discord Token.
-    - `Workers`: The amount of workers the bot will have for OCR (Default: `5`)
+    - `BotID`: (OPTIONAL) This will be your bot's ID. (*Not including this will disable slash commands*)
+    - `Workers`: The amount of workers the bot will have for OCR. Each worker takes about 100mb RAM. (Default: `5`)
     - `ApplyToModerators`: Whether to apply AOCR detection to admins and members with manage server. (Default: `false`)
     - `OnlyDelete`: This will only delete messages instead of applying all automod rules. (Default: `false`)
     - `CheckEmojis`: Check emojis with OCR. This requires processing **EVERY** message with regex. (Default: `false`)

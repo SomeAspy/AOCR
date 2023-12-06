@@ -1,11 +1,11 @@
 import {
     AutoModerationRuleTriggerType,
     type GuildMember,
-    Message,
+    type Message,
 } from "discord.js";
 import { runActions } from "./runActions.js";
 import { ocr } from "../libs/tesseract.js";
-import type { MessageReactionExtended } from "../types/extensions.js";
+import type { MessageReactionExtended } from "../types/Extensions.js";
 
 export async function process(
     member: GuildMember, // We require member separately so we can punish a user that is not the message author

@@ -1,9 +1,10 @@
 {
     "DiscordToken": "Token for a discord bot",
+    "BotID": "OPTIONAL: Not including will disable slash commands. Otherwise, it is the bot's user ID",
     "Workers": 5,
     "ApplyToModerators": false,
     "OnlyDelete": false,
-    "CheckEmojis": true,
-    "CheckReactions": false,
+    "CheckEmojis": false,
+    "CheckReactions": true,
     "CheckStickers": true
 }

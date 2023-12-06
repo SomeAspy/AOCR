@@ -24,6 +24,9 @@ client.once(Events.ClientReady, () => {
     console.log("Connected to Discord!");
 });
 
+import { pushHelpCommand } from "./functions/pushHelpCommand.js";
+await pushHelpCommand();
+
 import { handleMessage } from "./handlers/message.js";
 client.on(Events.MessageCreate, async (message) => {
     if (
@@ -54,19 +57,30 @@ client.on(Events.MessageUpdate, async (message) => {
     }
 });
 
-client.on(Events.MessageReactionAdd, async (reaction) => {
-    if (reaction.partial) {
-        reaction = await reaction.fetch();
-    }
-    if (reaction.count != 1) {
-        return;
-    }
-    try {
-        await handleReaction(reaction);
-    } catch (error) {
-        console.error(error);
-    }
-});
+if (config.CheckReactions) {
+    client.on(Events.MessageReactionAdd, async (reaction) => {
+        if (reaction.partial) {
+            reaction = await reaction.fetch();
+        }
+        if (reaction.count != 1) {
+            return;
+        }
+        try {
+            await handleReaction(reaction);
+        } catch (error) {
+            console.error(error);
+        }
+    });
+}
+
+import { execute } from "./functions/helpCommand.js";
+if (config.BotID) {
+    client.on(Events.InteractionCreate, async (interaction) => {
+        if (interaction.isChatInputCommand()) {
+            await execute(interaction);
+        }
+    });
+}
 
 client.on(Events.Error, (error) => console.error(error));
 client.on(Events.Warn, (warning) => console.warn(warning));

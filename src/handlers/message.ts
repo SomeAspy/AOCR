@@ -1,4 +1,4 @@
-import { Message, PermissionsBitField } from "discord.js";
+import { type Message, PermissionsBitField } from "discord.js";
 import { process } from "../functions/process.js";
 
 import untypedConfig from "../../config/config.json" assert { type: "json" };

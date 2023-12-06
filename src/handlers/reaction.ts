@@ -1,6 +1,6 @@
 import { MessageReaction } from "discord.js";
 import { process } from "../functions/process.js";
-import { MessageReactionExtended } from "../types/extensions.js";
+import { MessageReactionExtended } from "../types/Extensions.js";
 
 export async function handleReaction(reaction: MessageReaction) {
     if (reaction.message.partial) {
