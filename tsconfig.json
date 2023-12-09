@@ -36,6 +36,7 @@
     "include": [
         "src/**/*.ts",
         "config/*.json",
+        "src/commands/debug.ts",
     ],
     "exclude": [
         "node_modules",

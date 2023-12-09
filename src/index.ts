@@ -7,6 +7,7 @@ import {
 } from "discord.js";
 import untypedConfig from "../config/config.json" assert { type: "json" };
 import type { Config } from "./types/Config.js";
+
 const config = untypedConfig as Config;
 
 const client = new Client({
@@ -17,15 +18,27 @@ const client = new Client({
         GatewayIntentBits.GuildMessages,
         GatewayIntentBits.GuildMessageReactions,
     ],
-    partials: [Partials.Reaction, Partials.Message], // We need these partials to
+    partials: [Partials.Reaction, Partials.Message], // We need these partials to get messages and reactions sent before the bot started
 });
 
 client.once(Events.ClientReady, () => {
     console.log("Connected to Discord!");
 });
 
-import { pushHelpCommand } from "./functions/pushHelpCommand.js";
-await pushHelpCommand();
+import { commands, indexCommands } from "./functions/indexCommands.js";
+import { pushCommands } from "./functions/pushCommands.js";
+if (config.BotID) {
+    await indexCommands();
+    await pushCommands();
+
+    client.on(Events.InteractionCreate, async (interaction) => {
+        if (interaction.isCommand() && !interaction.isContextMenuCommand()) {
+            await handleCommand(interaction, client, commands);
+        }
+    });
+} else {
+    console.log("No BotID supplied! Not pushing commands!");
+}
 
 import { handleMessage } from "./handlers/message.js";
 client.on(Events.MessageCreate, async (message) => {
@@ -73,20 +86,12 @@ if (config.CheckReactions) {
     });
 }
 
-import { execute } from "./functions/helpCommand.js";
-if (config.BotID) {
-    client.on(Events.InteractionCreate, async (interaction) => {
-        if (interaction.isChatInputCommand()) {
-            await execute(interaction);
-        }
-    });
-}
-
 client.on(Events.Error, (error) => console.error(error));
 client.on(Events.Warn, (warning) => console.warn(warning));
 
 import { ocr } from "./libs/tesseract.js";
 import { handleReaction } from "./handlers/reaction.js";
+import { handleCommand } from "./handlers/command.js";
 client.on(Events.Invalidated, async () => {
     console.log("Session Invalidated - Stopping Client");
     await ocr.terminate();

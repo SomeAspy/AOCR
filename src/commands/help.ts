@@ -1,7 +1,4 @@
-import {
-    type ChatInputCommandInteraction,
-    SlashCommandBuilder,
-} from "discord.js";
+import { ChatInputCommandInteraction, SlashCommandBuilder } from "discord.js";
 import { readFile } from "fs/promises";
 
 export const data = new SlashCommandBuilder()

@@ -21,7 +21,7 @@
     - Manage Server (To view AutoMod rules)
     - Read Messages/View Channels (To view messages and images contained within)
     - Moderate Members (To apply moderation actions to members)
-    - Applications.Commands (Optional, adds a help command)
+    - Applications.Commands (Optional, Adds help and debug command)
 2. Add the bot to your server
 3. Clone this repository (`git clone https://github.com/SomeAspy/AOCR`)
 4. Set configs in `config/config.json` (copy `config.example.json` and rename the copy to `config.json`)
