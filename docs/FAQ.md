@@ -2,7 +2,7 @@
 
 > If you are using this from the bot, it is a mirror of <https://github.com/SomeAspy/AOCR/tree/main/docs/FAQ.md>
 
-## Why isn't the bot is not working?
+## Why isn't the bot working?
 
 The bot will not apply automod rules to members with `Administrator` or `Manage Server`. This is the same behavior you will get from regular automod.
 
