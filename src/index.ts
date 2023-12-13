@@ -33,7 +33,7 @@ if (config.BotID) {
 
     client.on(Events.InteractionCreate, async (interaction) => {
         if (interaction.isCommand() && !interaction.isContextMenuCommand()) {
-            await handleCommand(interaction, client, commands);
+            await handleCommand(interaction, commands);
         }
     });
 } else {
