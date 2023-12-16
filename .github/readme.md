@@ -6,8 +6,7 @@
 
 ## Invite
 
-<https://discord.com/api/oauth2/authorize?client_id=1168700227201548409&permissions=1099511639072&scope=bot+applications.commands>
-(Remove the `+applications.commands` part to disable the help command in server)
+<https://discord.com/api/oauth2/authorize?client_id=1168700227201548409&permissions=1099511639072&scope=bot>
 
 > [!IMPORTANT]
 > The production bot does not apply automod rules to admins/users with manage server, similar to standard automod
@@ -21,12 +20,10 @@
     - Manage Server (To view AutoMod rules)
     - Read Messages/View Channels (To view messages and images contained within)
     - Moderate Members (To apply moderation actions to members)
-    - Applications.Commands (Optional, Adds help and debug command)
 2. Add the bot to your server
 3. Clone this repository (`git clone https://github.com/SomeAspy/AOCR`)
 4. Set configs in `config/config.json` (copy `config.example.json` and rename the copy to `config.json`)
     - `DiscordToken`: This will be your bots Discord Token.
-    - `BotID`: (OPTIONAL) This will be your bot's ID. (*Not including this will disable slash commands*)
     - `Workers`: The amount of workers the bot will have for OCR. Each worker takes about 100mb RAM. (Default: `5`)
     - `ApplyToModerators`: Whether to apply AOCR detection to admins and members with manage server. (Default: `false`)
     - `OnlyDelete`: This will only delete messages instead of applying all automod rules. (Default: `false`)
