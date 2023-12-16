@@ -25,21 +25,6 @@ client.once(Events.ClientReady, () => {
     console.log("Connected to Discord!");
 });
 
-import { commands, indexCommands } from "./functions/indexCommands.js";
-import { pushCommands } from "./functions/pushCommands.js";
-if (config.BotID) {
-    await indexCommands();
-    await pushCommands();
-
-    client.on(Events.InteractionCreate, async (interaction) => {
-        if (interaction.isCommand() && !interaction.isContextMenuCommand()) {
-            await handleCommand(interaction, commands);
-        }
-    });
-} else {
-    console.log("No BotID supplied! Not pushing commands!");
-}
-
 import { handleMessage } from "./handlers/message.js";
 client.on(Events.MessageCreate, async (message) => {
     if (
@@ -91,7 +76,6 @@ client.on(Events.Warn, (warning) => console.warn(warning));
 
 import { ocr } from "./libs/tesseract.js";
 import { handleReaction } from "./handlers/reaction.js";
-import { handleCommand } from "./handlers/command.js";
 client.on(Events.Invalidated, async () => {
     console.log("Session Invalidated - Stopping Client");
     await ocr.terminate();
