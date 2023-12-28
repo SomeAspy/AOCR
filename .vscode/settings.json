@@ -3,6 +3,7 @@
         "AOCR",
         "AUTOMOD",
         "moderatable",
+        "paddlejs",
         "tessdata",
         "tesseract",
         "traineddata"

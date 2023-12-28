@@ -7,8 +7,9 @@
 		"lint": "eslint -c .eslintrc.json \"**/*.{ts,tsx}\""
 	},
 	"dependencies": {
-		"discord.js": "^14.14.1",
-		"tesseract.js": "^5.0.4"
+		"@paddlejs/paddlejs-backend-wasm": "^1.0.3",
+		"@paddlejs/paddlejs-core": "^2.2.0",
+		"discord.js": "^14.14.1"
 	},
 	"optionalDependencies": {
 		"tsx": "^4.7.0"

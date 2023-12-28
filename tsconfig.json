@@ -30,13 +30,12 @@
         "resolveJsonModule": true,
         "lib": [
             "ESNext",
-            "DOM",
         ],
     },
     "include": [
         "src/**/*.ts",
         "config/*.json",
-        "src/commands/debug.ts",
+        "src/commands/debug.ts", "src/libs/ocr.js", "src/index.js",
     ],
     "exclude": [
         "node_modules",
