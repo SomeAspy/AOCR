@@ -20,8 +20,8 @@
         "useUnknownInCatchVariables": true,
         "outDir": "dist",
         "target": "ESNext",
-        "module": "NodeNext",
-        "moduleResolution": "NodeNext",
+        "module": "ESNext",
+        "moduleResolution": "Bundler",
         "types": [
             "node"
         ],
@@ -35,8 +35,7 @@
     },
     "include": [
         "src/**/*.ts",
-        "config/*.json",
-        "src/commands/debug.ts",
+        "config/*.json"
     ],
     "exclude": [
         "node_modules",
