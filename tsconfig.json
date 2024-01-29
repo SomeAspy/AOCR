@@ -20,8 +20,8 @@
         "useUnknownInCatchVariables": true,
         "outDir": "dist",
         "target": "ESNext",
-        "module": "NodeNext",
-        "moduleResolution": "NodeNext",
+        "module": "ESNext",
+        "moduleResolution": "Bundler",
         "types": [
             "node"
         ],
@@ -30,12 +30,12 @@
         "resolveJsonModule": true,
         "lib": [
             "ESNext",
+            "DOM",
         ],
     },
     "include": [
         "src/**/*.ts",
-        "config/*.json",
-        "src/commands/debug.ts", "src/libs/ocr.js", "src/index.js",
+        "config/*.json"
     ],
     "exclude": [
         "node_modules",

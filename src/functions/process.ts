@@ -4,7 +4,7 @@ import {
     type Message,
 } from "discord.js";
 import { runActions } from "./runActions.js";
-import { ocr } from "../libs/ocr.js";
+import { ocr } from "../libs/tesseract.js";
 import type { MessageReactionExtended } from "../types/Extensions.js";
 
 export async function process(

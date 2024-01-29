@@ -1,13 +1,11 @@
 {
     "parser": "@typescript-eslint/parser",
     "plugins": [
-        "@typescript-eslint",
-        "json"
+        "@typescript-eslint"
     ],
     "extends": [
         "eslint:recommended",
-        "plugin:@typescript-eslint/recommended-type-checked",
-        "plugin:json/recommended"
+        "plugin:@typescript-eslint/recommended-type-checked"
     ],
     "root": true,
     "env": {
