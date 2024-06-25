@@ -1,16 +1,12 @@
-import {
-    AutoModerationRuleTriggerType,
-    type GuildMember,
-    type Message,
-} from "discord.js";
-import { runActions } from "./runActions.js";
-import { ocr } from "../libs/tesseract.js";
-import type { MessageReactionExtended } from "../types/Extensions.js";
+import {AutoModerationRuleTriggerType, type GuildMember, type Message} from "discord.js";
+import {runActions} from "./runActions.js";
+import {ocr} from "../libs/tesseract.js";
+import type {MessageReactionExtended} from "../types/Extensions.js";
 
 export async function process(
     member: GuildMember, // We require member separately so we can punish a user that is not the message author
     event: Message | MessageReactionExtended,
-    imageUrl: string,
+    imageUrl: string
 ) {
     const automodRules = await event.guild!.autoModerationRules.fetch();
     const ocrData = await ocr.addJob("recognize", imageUrl);

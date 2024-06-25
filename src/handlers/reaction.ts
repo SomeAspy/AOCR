@@ -1,6 +1,6 @@
-import { MessageReaction } from "discord.js";
-import { process } from "../functions/process.js";
-import { MessageReactionExtended } from "../types/Extensions.js";
+import {MessageReaction} from "discord.js";
+import {process} from "../functions/process.js";
+import {MessageReactionExtended} from "../types/Extensions.js";
 
 export async function handleReaction(reaction: MessageReaction) {
     if (reaction.message.partial) {
@@ -10,12 +10,7 @@ export async function handleReaction(reaction: MessageReaction) {
     if (!user) {
         user = (await reaction.users.fetch()).at(0);
     }
-    if (
-        !user ||
-        user.bot ||
-        !reaction.message.inGuild() ||
-        reaction.emoji.imageURL() == null
-    ) {
+    if (!user || user.bot || !reaction.message.inGuild() || reaction.emoji.imageURL() == null) {
         return;
     }
 
@@ -26,6 +21,6 @@ export async function handleReaction(reaction: MessageReaction) {
     await process(
         await reaction.message.guild.members.fetch(user),
         extendedReaction,
-        reaction.emoji.imageURL({ size: 4096 })!,
+        reaction.emoji.imageURL({size: 4096})!
     );
 }

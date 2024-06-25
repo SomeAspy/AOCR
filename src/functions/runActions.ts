@@ -5,12 +5,12 @@ import {
     type GuildMember,
     type MessageReaction,
     type TextBasedChannel,
-    EmbedBuilder,
+    EmbedBuilder
 } from "discord.js";
 import type Tesseract from "tesseract.js";
 
-import untypedConfig from "../../config/config.json" assert { type: "json" };
-import type { Config } from "../types/Config.js";
+import untypedConfig from "../../config/config.json" assert {type: "json"};
+import type {Config} from "../types/Config.js";
 const config = untypedConfig as Config;
 
 export async function runActions(
@@ -18,27 +18,21 @@ export async function runActions(
     automodActions: AutoModerationAction[],
     event: Message | MessageReaction,
     ocrData: Tesseract.RecognizeResult,
-    imageUrl: string,
+    imageUrl: string
 ) {
-    const blockRule = automodActions.find(
-        (rule) => rule.type == AutoModerationActionType.BlockMessage,
-    );
-    const alertRule = automodActions.find(
-        (rule) => rule.type == AutoModerationActionType.SendAlertMessage,
-    );
-    const timeoutRule = automodActions.find(
-        (rule) => rule.type == AutoModerationActionType.Timeout,
-    );
+    const blockRule = automodActions.find((rule) => rule.type == AutoModerationActionType.BlockMessage);
+    const alertRule = automodActions.find((rule) => rule.type == AutoModerationActionType.SendAlertMessage);
+    const timeoutRule = automodActions.find((rule) => rule.type == AutoModerationActionType.Timeout);
 
     const embed = new EmbedBuilder()
         .setAuthor({
             name: member.user.username,
-            iconURL: member.user.displayAvatarURL(),
+            iconURL: member.user.displayAvatarURL()
         })
-        .addFields({ name: "AOCR Recognized:", value: ocrData.data.text })
+        .addFields({name: "AOCR Recognized:", value: ocrData.data.text})
         .addFields({
             name: "Result Confidence:",
-            value: `${ocrData.data.confidence}%`,
+            value: `${ocrData.data.confidence.toString()}%`
         })
         .setImage(imageUrl);
 
@@ -47,9 +41,7 @@ export async function runActions(
             try {
                 await member.timeout(
                     timeoutRule.metadata.durationSeconds! * 1000,
-                    timeoutRule.metadata.customMessage
-                        ? timeoutRule.metadata.customMessage
-                        : "AOCR: Rule Broken",
+                    timeoutRule.metadata.customMessage ? timeoutRule.metadata.customMessage : "AOCR: Rule Broken"
                 );
             } catch {
                 // Do nothing.
@@ -59,11 +51,9 @@ export async function runActions(
 
     if (alertRule) {
         try {
-            await (
-                event.client.channels.cache.get(
-                    alertRule.metadata.channelId!,
-                ) as TextBasedChannel
-            ).send({ embeds: [embed] });
+            await (event.client.channels.cache.get(alertRule.metadata.channelId!) as TextBasedChannel).send({
+                embeds: [embed]
+            });
         } catch {
             // Do nothing.
         }
@@ -72,10 +62,8 @@ export async function runActions(
     if (blockRule) {
         try {
             await member.send({
-                content: blockRule.metadata.customMessage
-                    ? blockRule.metadata.customMessage
-                    : "AOCR: Rule Broken",
-                embeds: [embed],
+                content: blockRule.metadata.customMessage ? blockRule.metadata.customMessage : "AOCR: Rule Broken",
+                embeds: [embed]
             });
         } catch {
             // Do nothing.
