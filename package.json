@@ -11,7 +11,7 @@
         "tesseract.js": "^5.1.0"
     },
     "optionalDependencies": {
-        "tsx": "^4.15.7"
+        "tsx": "^4.19.0"
     },
     "devDependencies": {
         "@eslint/js": "^9.5.0",
