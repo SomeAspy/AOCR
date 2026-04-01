@@ -9,7 +9,7 @@
 	},
 	"dependencies": {
 		"discord.js": "^14.25.1",
-		"tesseract.js": "^6.0.1"
+		"tesseract.js": "^7.0.0"
 	},
 	"optionalDependencies": {
 		"tsx": "^4.21.0"
