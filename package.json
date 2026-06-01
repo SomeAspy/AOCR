@@ -8,7 +8,7 @@
 		"build": "tsc"
 	},
 	"dependencies": {
-		"discord.js": "^14.26.3",
+		"discord.js": "^14.26.4",
 		"tesseract.js": "^7.0.0"
 	},
 	"devDependencies": {
